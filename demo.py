@@ -3706,4 +3706,4 @@ def view_seller_history_report():
 
 if __name__ == '__main__':
     setup_database()  # Set up the database before starting the app
-    app.run_server(debug=False)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=False)
