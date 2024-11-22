@@ -1,0 +1,47 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Add Parts Order</title>
+    </head>
+    <body>
+        <button onclick = "history.back()">Go Back</button></p>
+        <h2>Add Parts Order</h2>
+        <form method="POST" action="{{ url_for('add_parts_order') }}">
+            <label for="vin">VIN:</label>
+            <input type="text" id="vin" name="vin" required>
+            <br><br>
+            <label for="Part_Description">Part Description:</label>
+            <input type="text" id="Part_Description" name="Part_Description" required>
+            <br><br>
+            <label for="Vendor_Name">Vendor Name:</label>
+            <select name="Vendor_Name">
+                <option value="">Select Vendor Name</option>
+                {% for vn in results['vendor_names'] %}
+                    <option value="{{ vn }}">{{ vn }}</option>
+                {% endfor %}
+            </select>
+            <a href='/add_vendor'>Add a new vendor</a>
+            <br><br>
+            <label for="Vendor_Part_Number">Vendor Part Number:</label>
+            <input type="text" id="Vendor_Part_Number" name="Vendor_Part_Number" required>
+            <br><br>
+            <label for="Unit_Price">Unit Price:</label>
+            <input type="number" id="Unit_Price" name="Unit_Price" step="0.01" required>
+            <br><br>
+            <label for="Quantity">Quantity:</label>
+            <input type="number" id="Quantity" name="Quantity" required>
+            <br><br>
+            <label for="Status">Status:</label>
+            <select id="Status" name="Status" required>
+                <option value="">Select Status</option>
+                <option value="ordered">Ordered</option>
+                <option value="received">Received</option>
+                <option value="installed">Installed</option>
+            </select>
+            <br><br>
+            <button type="submit">Add Parts Order</button>
+        </form>
+        <p><a href="/">Log Out</a></p>
+    </body>
+    </html>

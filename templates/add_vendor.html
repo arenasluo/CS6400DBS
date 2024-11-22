@@ -1,0 +1,34 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Add vendor</title>
+    </head>
+    <body>
+        <h2>Add vendor</h2>
+        <form method="POST" action="{{ url_for('add_vendor') }}">
+        <label for="Vendor">Vendor Name:</label>
+        <input type="text" id="Vendor" name="Vendor" required>
+        <br><br>
+        <label for="PhoneNumber">PhoneNumber:</label>
+        <input type="text" id="PhoneNumber" name="PhoneNumber" required>
+        <br><br>
+        <label for="StreetAddress">StreetAddress:</label>
+        <input type="text" id="StreetAddress" name="StreetAddress" required>
+        <br><br>
+        <label for="City">City:</label>
+        <input type="text" id="City" name="City" required>
+        <br><br>
+        <label for="State">State:</label>
+        <input type="text" id="State" name="State" required>
+        <br><br>
+        <label for="PostalCode">PostalCode:</label>
+        <input type="text" id="PostalCode" name="PostalCode" required>
+        <br><br>
+        <button type="submit">Add Vendor</button>
+        </form>
+        <br><br>
+        <p><a href="{{ url_for('add_parts_order') }}">Back to Add Parts Order</a></p>
+        <p><a href="/">Back to Main Menu</a></p>
+    </body>
+    </html>

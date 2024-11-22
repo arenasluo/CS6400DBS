@@ -1,0 +1,104 @@
+return render_template_string(f'''
+                        <!doctype html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="utf-8">
+                            <title>Welcome Salesperson</title>
+                            <style>
+                                .center {{
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-size: 18px;
+                                    padding: 20px;
+                                }}
+                            </style>
+                        </head>
+                        <body>
+                            <div class="center">
+                                <h2>Welcome, { role }</h2>
+                                <p>Total Available Vehicles: <strong>{ available_vehicle }</strong></p>
+
+                                <form action="/search_salesperson" method="POST">
+                                    <div class="form-group">
+                                        <label for="vehicle_type">Vehicle Type:</label>
+                                        <select name="vehicle_type">
+                                            <option value="">Select Vehicle Type</option>
+                                            {''.join([f'<option value="{vt}">{vt}</option>' for vt in sorted(results["vehicle_types"])])}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="manufacturer">Manufacturer:</label>
+                                        <select name="manufacturer">
+                                            <option value="">Select Manufacturer</option>
+                                            {''.join([f'<option value="{m}">{m}</option>' for m in sorted(results["manufacturers"])])}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="model_year">Model Year:</label>
+                                        <select name="model_year">
+                                            <option value="">Select Model Year</option>
+                                            {''.join([f'<option value="{year}">{year}</option>' for year in sorted(results["model_years"])])}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fuel_type">Fuel Type:</label>
+                                        <select name="fuel_type">
+                                            <option value="">Select Fuel Type</option>
+                                            {''.join([f'<option value="{ft}">{ft}</option>' for ft in sorted(results["fuel_types"])])}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="color">Color:</label>
+                                        <select name="color">
+                                            <option value="">Select Color</option>
+                                            {''.join([f'<option value="{color}">{color}</option>' for color in sorted(results["colors"])])}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="keyword">Keyword:</label>
+                                        <input type="text" name="keyword" placeholder="Enter keyword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vin">VIN:</label>
+                                        <input type="text" name="vin" placeholder="Enter VIN">
+                                    </div>
+
+                                    <button type="submit">Search</button>
+                                </form>
+                            </div>
+                        </body>
+                        </html>
+                        ''')
+
+
+                        return render_template_string('''
+                        <!doctype html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="utf-8">
+                            <title>Welcome</title>
+                        </head>
+                        <body>
+                            <h2>Welcome, {{ role }}</h2>
+                            <p><a href="{{ session.get('previous_url', url_for('login')) }}">Go Back</a></p>
+                        </body>
+                        </html>
+                        ''', role=role)
+
+
+                        <form method="POST" action="{url_for('sale_transaction')}">
+                            <label for="vin">VIN:</label>
+                            <input type="text" id="vin" name="vin" required>
+                            <label for="SSN_TIN">Customer's SSN_TIN:</label>
+                            <input type="text" id="SSN_TIN" name="SSN_TIN" required>
+                            <a href="/search_customer"><button>Search customer</button></a>
+                            <button type="submit">Sell the Vehicle</button>
+                        </form>
+            
+                        <form method="POST" action="{url_for('search_customer')}">
+                            <label for="SSN_TIN">SSN_TIN:</label>
+                            <input type="text" id="SSN_TIN" name="SSN_TIN" required>
+                            <button type="submit">Search customer</button>
+                        </form>

@@ -1,0 +1,76 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Add Customer</title>
+        <style>
+            .flash-message{ background-color: #f8d7da;
+                color:#721c24;
+                border: 1px solid #f5c6cb;
+                padding: 10 px;
+                margin-botton: 20px;
+                text-align: center
+                border-radius:5px;
+
+            }
+        </style>
+    </head>
+    <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {%for category, message in messages %}
+            <div class="flash-message">{{message}}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+        <h2>Add Customer</h2>
+        <form method="POST" action="{{ url_for('add_customer') }}">
+            <label for="customer_type">Vehicle Type:</label>
+                    <select name="customer_type">
+                        <option value="">Select a customer type</option>
+                        <option value="person">person</option>
+                        <option value="business">business</option>
+                    </select>
+            <br><br>
+            <label for="ssn_tin">SSN/TIN:</label>
+            <input type="text" id="ssn_tin" name="ssn_tin">
+            <br><br>
+            <label for="email">EMAIL:</label>
+            <input type="text" id="email" name="email">
+            <br><br>
+            <label for="phone">PHONE:</label>
+            <input type="text" id="phone" name="phone">
+            <br><br>
+            <label for="street_address">Street Address:</label>
+            <input type="text" id="street_address" name="street_address">
+            <br><br>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city">
+            <br><br>
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state">
+            <br><br>
+            <label for="postal_code">Postal Code:</label>
+            <input type="text" id="postal_code" name="postal_code">
+            <br><br>
+            <label for="Business_Name">Business Name:</label>
+            <input type="text" id="Business_Name" name="Business_Name">
+            <br><br>
+            <label for="Business_contact_title">Business Contact Title:</label>
+            <input type="text" id="Business_contact_title" name="Business_contact_title">
+            <br><br>
+            <label for="First_Name">First Name:</label>
+            <input type="text" id="First_Name" name="First_Name">
+            <br><br>
+            <label for="LastName">Last Name:</label>
+            <input type="text" id="LastName" name="LastName">
+            <br><br>
+            <button type="submit">Add Customer</button>
+        </form>
+        
+        <p><a href="/add_vehicle">Back to Add Vehicle</a></p>
+
+        <p><a href="/">Back to Main Menu</a></p>
+
+    </body>
+    </html>

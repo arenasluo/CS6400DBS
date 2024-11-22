@@ -1,0 +1,64 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Add Vehicle</title>
+    </head>
+    <body>
+        <h2>Add Vehicle</h2>
+        <form method="POST" action="{{ url_for('add_vehicle') }}">
+            <label for="vin">VIN:</label>
+            <input type="text" id="vin" name="vin" required>
+            <br><br>
+            <label for="model_year">Model Year:</label>
+            <select name="model_year">
+                <option value="">Select Model Year</option>
+                {% for year in model_years %}
+                    <option value="{{ year }}">{{ year }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <label for="model_name">Model Name:</label>
+            <input type="text" id="model_name" name="model_name" required>
+            <br><br>
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required>
+            <br><br>
+            <label for="horsepower">Horsepower:</label>
+            <input type="text" id="horsepower" name="horsepower" required>
+            <br><br>
+            <label for="fuel_type">Fuel Type:</label>
+            <select name="fuel_type">
+                <option value="">Select Fuel Type</option>
+                {% for ft in results['fuel_types'] %}
+                    <option value="{{ ft }}">{{ ft }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <label for="vehicle_type">Vehicle Type:</label>
+            <select name="vehicle_type">
+                <option value="">Select Vehicle Type</option>
+                {% for vt in results['vehicle_types'] %}
+                    <option value="{{ vt }}">{{ vt }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <label for="manufacturer">Manufacturer:</label>
+            <select name="manufacturer">
+                <option value="">Select Manufacturer</option>
+                {% for m in results['manufacturers'] %}
+                    <option value="{{ m }}">{{ m }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <label for="vehicle_condition">Vehicle Condition:</label>
+            <input type="text" id="vehicle_condition" name="vehicle_condition" required>
+            <br><br>
+            <label for="color">Color:</label>
+            <input type="text" id="color" name="color" required>
+            <br><br>
+            <button type="submit">Add Vehicle</button>
+        </form>
+        <p><a href="/">Back to Main Menu</a></p>
+    </body>
+    </html>

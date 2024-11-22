@@ -1,0 +1,33 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Sell Vehicle</title>
+    </head>
+    <body>
+        <br><br>
+        <form method="POST" action="{{ url_for('search_customer') }}">
+            <label for="SSN_TIN">Search Customer by SSN or TIN:</label>
+                <input type="text" id="SSN_TIN" name="SSN_TIN" placeholder="SSN_TIN" required>
+                <button type="search">Search</button>
+                <br><br>
+        </form>
+
+        <h2>Sell Vehicle</h2>
+
+        <form method="POST" action="{{ url_for('sale_transaction') }}">
+            <label for="SSN_TIN">Customer's SSN or TIN:</label>
+                <input type="text" id="SSN_TIN" name="SSN_TIN" placeholder="SSN_TIN" required>
+                <br><br>
+            <label for="vin">VIN:</label>
+            <input type="text" id="vin" name="vin" required>
+            <br><br>
+            <label for="saledate">Sale Date:</label>
+            <input type="date" id="saledate" name="saledate" required>
+            <br><br>
+            <br><br>
+            <button type="submit">Sell Vehicle</button>
+        </form>
+        <p><a href="/">Back to Main Menu</a></p>
+    </body>
+    </html>

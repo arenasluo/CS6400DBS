@@ -1,0 +1,315 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <title>Main Menu</title>
+        
+    </head>
+    <body>
+        <p><a href="{{ url_for('logout') }}">Logout</a></p>
+
+        <div class="center-content">
+            <p>Welcome to North Avenue Automative!</p>
+            <p>This is the Main Menu</p>
+        </div>
+
+        {% if user.is_inventory_clerk %}
+            Hello, {{user.username}}, inventory_clerk
+        {% endif %}
+
+
+        {% if user.is_salesperson %}
+            Hello, {{user.username}}, salesperson
+        {% endif %}
+
+        {% if user.is_manager %}
+            Hello, {{user.username}}, manager
+        {% endif %}
+
+        {% if user.is_owner %}
+            Hello, {{user.username}}, owner
+        {% endif %}
+
+
+        <div class="display-box">
+            <strong>Available Vehicles for sale:</strong>
+            <p>{{available_vehicle}}</p>
+        </div>
+        
+        {% if user.is_public %}
+            <div class="top-right">
+                <a href="/login"><button>Login</button></a>
+            </div>
+
+            
+            <form action="/search" method="POST">
+                <p>Search Vehicle by </p>
+                <div class="form-group">
+                    <label for="vehicle_type">Vehicle Type:</label>
+                    <select name="vehicle_type">
+                        <option value="">Select a vehicle type</option>
+                        {% for vt in results["vehicle_types"] %}
+                            <option value={{vt}}>{{vt}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="manufacturer">Manufacturer:</label>
+                    <select name="manufacturer">
+                        <option value="">Select Manufacturer</option>
+                        {% for m in results["manufacturers"] %}
+                            <option value={{m}}>{{m}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="model_year">Model Year:</label>
+                    <select name="model_year">
+                        <option value="">Select Model Year</option>
+                        {% for my in results["model_years"] %}
+                            <option value={{my}}>{{my}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fuel_type">Fuel Type:</label>
+                    <select name="fuel_type">
+                        <option value="">Select Fuel Type</option>
+                        {% for ft in results["fuel_types"] %}
+                            <option value={{ft}}>{{ft}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="color">Color:</label>
+                    <select name="color">
+                        <option value="">Select Color</option>
+                        {% for c in results["colors"] %}
+                            <option value={{c}}>{{c}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="keyword">Keyword:</label>
+                    <input type="text" name="keyword" placeholder="Enter keyword">
+                </div>
+                <button type="submit">Search</button>
+            </form>
+        {% endif %}
+
+
+        {% if user.is_salesperson%}
+        <form method="POST" action="{{ url_for('search') }}">
+                
+            <div class="form-group">
+                <p>Search Vehicle by </p>
+                <label for="vehicle_type">Vehicle Type:</label>
+                <select name="vehicle_type">
+                    <option value="">Select a vehicle type</option>
+                    {% for vt in results["vehicle_types"] %}
+                        <option value={{vt}}>{{vt}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="manufacturer">Manufacturer:</label>
+                <select name="manufacturer">
+                    <option value="">Select Manufacturer</option>
+                    {% for m in results["manufacturers"] %}
+                        <option value={{m}}>{{m}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="model_year">Model Year:</label>
+                <select name="model_year">
+                    <option value="">Select Model Year</option>
+                    {% for my in results["model_years"] %}
+                        <option value={{my}}>{{my}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fuel_type">Fuel Type:</label>
+                <select name="fuel_type">
+                    <option value="">Select Fuel Type</option>
+                    {% for ft in results["fuel_types"] %}
+                        <option value={{ft}}>{{ft}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="color">Color:</label>
+                <select name="color">
+                    <option value="">Select Color</option>
+                    {% for c in results["colors"] %}
+                        <option value={{c}}>{{c}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="keyword">Keyword:</label>
+                <input type="text" name="keyword" placeholder="Enter keyword">
+            </div>
+            <label for="search_vin">VIN:</label>
+            <input type="text" id="search_vin" name="vin">
+            <button type="submit">Search</button>
+        </form>
+        {% endif %}
+
+        
+        
+        {% if user.is_inventory_clerk or user.is_manager or user.is_owner%}
+            <p>Vehicles with parts pending: {{ parts_pending }}</p>
+        {% endif %}
+
+        {% if user.is_inventory_clerk or user.is_owner%}
+            <p><a href="{{ url_for('add_vehicle') }}">Add Vehicle</a></p>
+            <p><a href="{{ url_for('add_parts_order') }}">Add Parts Order</a></p>
+        {% endif %}
+                            
+
+
+        {% if user.is_inventory_clerk %}
+                
+            <form method="POST" action="{{ url_for('search_inventory_clerk') }}">
+                
+                <div class="form-group">
+                    <p>Search Vehicle by </p>
+                    <label for="vehicle_type">Vehicle Type:</label>
+                    <select name="vehicle_type">
+                        <option value="">Select a vehicle type</option>
+                        {% for vt in results["vehicle_types"] %}
+                            <option value={{vt}}>{{vt}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="manufacturer">Manufacturer:</label>
+                    <select name="manufacturer">
+                        <option value="">Select Manufacturer</option>
+                        {% for m in results["manufacturers"] %}
+                            <option value={{m}}>{{m}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="model_year">Model Year:</label>
+                    <select name="model_year">
+                        <option value="">Select Model Year</option>
+                        {% for my in results["model_years"] %}
+                            <option value={{my}}>{{my}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fuel_type">Fuel Type:</label>
+                    <select name="fuel_type">
+                        <option value="">Select Fuel Type</option>
+                        {% for ft in results["fuel_types"] %}
+                            <option value={{ft}}>{{ft}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="color">Color:</label>
+                    <select name="color">
+                        <option value="">Select Color</option>
+                        {% for c in results["colors"] %}
+                            <option value={{c}}>{{c}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="keyword">Keyword:</label>
+                    <input type="text" name="keyword" placeholder="Enter keyword">
+                </div>
+                <label for="search_vin">VIN:</label>
+                <input type="text" id="search_vin" name="vin">
+                <button type="submit">Search</button>
+            </form>
+        {% endif %}
+
+        {% if user.is_manager or user.is_owner%}                    
+                
+            <form method="POST" action="{{ url_for('search_manager') }}">
+                
+                <div class="form-group">
+                    <p>Search Vehicle by </p>
+                    <label for="vehicle_type">Vehicle Type:</label>
+                    <select name="vehicle_type">
+                        <option value="">Select a vehicle type</option>
+                        {% for vt in results["vehicle_types"] %}
+                            <option value={{vt}}>{{vt}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="manufacturer">Manufacturer:</label>
+                    <select name="manufacturer">
+                        <option value="">Select Manufacturer</option>
+                        {% for m in results["manufacturers"] %}
+                            <option value={{m}}>{{m}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="model_year">Model Year:</label>
+                    <select name="model_year">
+                        <option value="">Select Model Year</option>
+                        {% for my in results["model_years"] %}
+                            <option value={{my}}>{{my}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fuel_type">Fuel Type:</label>
+                    <select name="fuel_type">
+                        <option value="">Select Fuel Type</option>
+                        {% for ft in results["fuel_types"] %}
+                            <option value={{ft}}>{{ft}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="color">Color:</label>
+                    <select name="color">
+                        <option value="">Select Color</option>
+                        {% for c in results["colors"] %}
+                            <option value={{c}}>{{c}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="keyword">Keyword:</label>
+                    <input type="text" name="keyword" placeholder="Enter keyword">
+                </div>
+                <label for="search_vin">VIN:</label>
+                <input type="text" id="search_vin" name="vin">
+                <br>
+                <label for="filter">Select vehicle status:</label>
+                    <select name="filter" id="filter">
+                    <option value="sold">sold vehicles</option>
+                    <option value="unsold">unsold vehicles</option>
+                    <option value="all">all vehicles</option>
+                    </select> 
+                <button type="submit">Search</button>
+            </form>
+        {% endif %}
+
+
+
+        {% if user.is_manager or user.is_owner %}
+            <!-- Report Buttons -->
+            <a href="{{ url_for('view_monthly_sales_report') }}" class="button">Monthly Sale Report</a>
+            <br>
+            <a href="{{ url_for('view_average_time_in_inventory_report') }}" class="button">Average Time in Inventory</a>
+            <br>
+            <a href="{{ url_for('view_seller_history_report') }}" class="button">Seller History Report</a>
+            <br>
+            <a href="{{ url_for('view_parts_statistics_report') }}" class="button">Parts Statistic Report</a>
+            <br>
+            <a href="{{ url_for('view_price_per_condition_report') }}" class="button">Price Per Condition Report</a>
+        {% endif %}
+        
+    </body>
+    </html>

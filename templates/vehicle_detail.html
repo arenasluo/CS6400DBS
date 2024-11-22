@@ -1,0 +1,383 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <title>Vehicle Detail</title>
+        <style>
+            .center {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+                padding: 20px;
+            }
+            .results-table {
+                width: 200px;
+                margin-top: 20px;
+                border-collapse: collapse;
+                table-layout:auto;
+                word-wrap:break-word;
+                overflow:visible;
+            }
+            .results-table, .results-table th, .results-table td {
+                border: 1px solid;
+                padding: 10px;
+                text-align: left;
+                border-collapse: collapse;
+                table-layout:auto;
+                word-wrap:break-word;
+                overflow:visible;
+            }
+            .results-table th {
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
+    <body>
+        <button onclick = "history.back()">Go Back</button></p>
+        <p><a href="{{ url_for('logout') }}">Logout</a></p>
+        <div class="center">
+            <h2>Vehicle Details</h2>
+            <a href="/"><button>Back to Main Menu</button></a>
+            {% if not detail  %}
+                <p class='no-results'>No detail found.</p>
+            {% endif %}
+
+            {% if user.is_inventory_clerk or user.is_owner%}
+                <p><a href="/add_parts_order">Add Parts Order</a></p>
+            {% endif %}
+
+
+
+            {% if user.is_public or user.is_salesperson%}
+            <table class="results-table">
+                <thead>
+                <tr>
+                    <th>VIN</th>
+                    <th>Vehicle Type</th>
+                    <th>Manufacturer</th>
+                    <th>Model Name</th>
+                    <th>Model Year</th>
+                    <th>Fuel Type</th>
+                    <th>Colors</th>
+                    <th>Horse Power</th>
+                    <th>Sale Price</th>
+                    <th>Description</th>
+
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for row in detail %}
+                <tr>
+
+                    <td>{{row.get('vin', 'N/A')}}</td>
+                    <td>{{row.get('vehicle_type', 'N/A')}}</td>
+                    <td>{{row.get('manufacturer', 'N/A')}}</td>
+                    <td>{{row.get('modelname', 'N/A')}}</td>
+                    <td>{{row.get('modelyear', 'N/A')}}</td>
+                    <td>{{row.get('fueltype', 'N/A')}}</td>
+                    <td>{{row.get('colors', 'N/A')}}</td>
+                    <td>{{row.get('horsepower', 'N/A')}}</td>
+                    <td>{{row.get('saleprice', 'N/A')}}</td>
+                    <td>{{row.get('description', 'N/A')}}</td>
+
+                </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+            {% endif %}
+
+            {% if user.is_inventory_clerk or user.is_manager or user.is_owner%}
+            <table class="results-table">
+                <thead>
+                <tr>
+                    <th>VIN</th>
+                    <th>Vehicle Type</th>
+                    <th>Manufacturer</th>
+                    <th>Model Name</th>
+                    <th>Model Year</th>
+                    <th>Fuel Type</th>
+                    <th>Colors</th>
+                    <th>Horse Power</th>
+                    <th>Sale Price</th>
+                    <th>Description</th>
+                    <th>Purchase Price</th>
+                    <th>All parts costs</th>
+
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for row in detail %}
+                <tr>
+
+                    <td>{{row.get('vin', 'N/A')}}</td>
+                    <td>{{row.get('vehicle_type', 'N/A')}}</td>
+                    <td>{{row.get('manufacturer', 'N/A')}}</td>
+                    <td>{{row.get('modelname', 'N/A')}}</td>
+                    <td>{{row.get('modelyear', 'N/A')}}</td>
+                    <td>{{row.get('fueltype', 'N/A')}}</td>
+                    <td>{{row.get('colors', 'N/A')}}</td>
+                    <td>{{row.get('horsepower', 'N/A')}}</td>
+                    <td>{{row.get('saleprice', 'N/A')}}</td>
+                    <td>{{row.get('description', 'N/A')}}</td>
+                    <td>{{row.get('purchaseprice', 'N/A')}}</td>
+                    <td>{{row.get('partscost', 'N/A')}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+
+            {% if user.is_inventory_clerk or user.is_owner%}
+
+                <h2>Vendor Parts Orders Status Information</h2>
+                {% if not part_detail  %}
+                    <p class='no-results'>No parts orders information found.</p>
+                {% endif %}
+
+                <table class="results-table">
+                    <tr>
+                        <th>VIN</th>
+                        <th>Vendor Part Number</th>
+                        <th>Description</th>
+                        <th>Vendor Name</th>
+                        <th>Part Order Number</th>
+                        <th>Part Unit Price</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                        <th>Update Status</th>
+                    </tr>
+                    <tbody>
+                        {% for p in part_detail %}
+                        <tr>
+
+                            {% if p.get('status', 'N/A') == "installed" or p.get('status', 'N/A') == 'N/A'  %}
+                                <td>{{p.get('vin', 'N/A')}}</td>
+                                <td>{{p.get('vendorpartsnumber', 'N/A')}}</td>
+                                <td>{{p.get('description', 'N/A')}}</td>
+                                <td>{{p.get('vendorname', 'N/A')}}</td>
+                                <td>{{p.get('ordernumber', 'N/A')}}</td>
+                                <td>{{p.get('unitprice', 'N/A')}}</td>
+                                <td>{{p.get('quantity', 'N/A')}}</td>
+                                <td> installed </td>
+                                <td> NO UPDATE ALLOWED </td>
+                            {% endif %}
+
+                            {% if p.get('status', 'N/A') == "received"  %}
+
+                            <form method="POST" action="{{ url_for('update_status') }}">
+                                
+                                <td> <input type="text" name = "vin" value = {{p.get('vin', 'N/A')}} > </td>
+                                <td>  <input type="text" name = "vpn" value = {{p.get('vendorpartsnumber', 'N/A')}} ></td>
+                                <td>{{p.get('description', 'N/A')}}</td> 
+                                <td>{{p.get('vendorname', 'N/A')}}</td>
+                                <td> <input type="text" name = "on" value = {{p.get('ordernumber', 'N/A')}} ></td> 
+                                <td>{{p.get('unitprice', 'N/A')}}</td>
+                                <td>{{p.get('quantity', 'N/A')}}</td>
+                                <td> 
+                                    <select name="status">
+                                        <option value="received">received</option>
+                                        <option value="installed">installed</option>
+                                    </select>
+                                </td>
+                                <td>
+                                <button type="submit">Update Status</button>
+                                </td>
+                            </form>
+                            {% endif %}
+
+
+                            {% if p.get('status', 'N/A') == "ordered"  %}
+
+                            <form method="POST" action="{{ url_for('update_status') }}">
+                                
+                            <td> <input type="text" name = "vin" value = {{p.get('vin', 'N/A')}} > </td>
+                            <td>  <input type="text" name = "vpn" value = {{p.get('vendorpartsnumber', 'N/A')}} ></td>
+                            <td>{{p.get('description', 'N/A')}}</td> 
+                            <td>{{p.get('vendorname', 'N/A')}}</td>
+                            <td> <input type="text" name = "on" value = {{p.get('ordernumber', 'N/A')}} ></td> 
+                            <td>{{p.get('unitprice', 'N/A')}}</td>
+                            <td>{{p.get('quantity', 'N/A')}}</td>
+                                <td> 
+                                    <select name="status">
+                                        <option type="text" value="ordered">ordered</option>
+                                        <option type="text" value="received">received</option>
+                                        <option type="text" value="installed">installed</option>
+                                    </select>
+                                </td>
+                                <td>
+                                <button type="submit">Update Status</button>
+                                </td>
+                            </form>
+                            {% endif %}
+                           
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+            {% endif %}
+
+            {% if user.is_manager%}
+            <h2>Vendor Parts Orders Status Information</h2>
+            {% if not part_detail  %}
+                <p class='no-results'>No parts orders information found.</p>
+            {% endif %}
+
+            <table class="results-table">
+                <tr>
+                    <th>VIN</th>
+                    <th>Vendor Part Number</th>
+                    <th>Description</th>
+                    <th>Vendor Name</th>
+                    <th>Part Order Number</th>
+                    <th>Part Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+            
+                </tr>
+                <tbody>
+                    {% for p in part_detail %}
+                    <tr>
+
+                
+                            <td>{{p.get('vin', 'N/A')}}</td>
+                            <td>{{p.get('vendorpartsnumber', 'N/A')}}</td>
+                            <td>{{p.get('description', 'N/A')}}</td>
+                            <td>{{p.get('vendorname', 'N/A')}}</td>
+                            <td>{{p.get('ordernumber', 'N/A')}}</td>
+                            <td>{{p.get('unitprice', 'N/A')}}</td>
+                            <td>{{p.get('quantity', 'N/A')}}</td>
+                            <td>{{p.get('status', 'N/A')}}</td>
+                        
+                        </tr>
+                    {% endfor %}   
+                    </tbody>
+                    <table>
+            {% endif %}
+
+            {% if user.is_manager or user.is_owner %}
+
+            <h2>Purchase Transaction information </h2>
+                {% if not purchase_record %}
+                <p class='no-results'>No Purchase Transaction record found.</p>
+                {% endif %}
+
+                <table class="results-table">
+                    <tr>
+                    <th>Seller's Customer Type</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Street Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Postal Code</th>
+                    <th>Business Name</th>
+                    <th>Business Contact Title</th>
+                    <th>Business Contact First Name</th>
+                    <th>Business Contact Last Name</th>
+                    <th>Person First Name</th>
+                    <th>Person Last Name</th>
+
+                    <th>Inverory Clerk's First Name</th>
+                    <th>Inverory Clerk's Last Name</th>
+                    <th>Purchase price</th>
+                    <th>Purchase date</th>
+                    </tr>
+                    <tbody>
+                    {% for row in purchase_record %}
+                    <tr>
+    
+                        <td>{{row.get('customer_type', 'N/A')}}</td>
+                        <td>{{row.get('email', 'N/A')}}</td>
+                        <td>{{row.get('phone', 'N/A')}}</td>
+                        <td>{{row.get('streetaddress', 'N/A')}}</td>
+                        <td>{{row.get('city', 'N/A')}}</td>
+                        <td>{{row.get('state', 'N/A')}}</td>
+                        <td>{{row.get('postalcode', 'N/A')}}</td>
+                        <td>{{row.get('biz_name', 'N/A')}}</td>
+                        <td>{{row.get('biz_contact_title', 'N/A')}}</td>
+                        <td>{{row.get('biz_contact_first', 'N/A')}}</td>
+                        <td>{{row.get('biz_contact_last', 'N/A')}}</td>
+                        <td>{{row.get('person_first', 'N/A')}}</td>
+                        <td>{{row.get('person_last', 'N/A')}}</td>
+
+                        <td>{{row.get('first_name', 'N/A')}}</td>
+                        <td>{{row.get('last_name', 'N/A')}}</td>
+                        <td>{{row.get('purchaseprice', 'N/A')}}</td>
+                        <td>{{row.get('purchasedate', 'N/A')}}</td>
+                        
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+        
+
+                <h2>Sale Transaction information </h2>
+                {% if not sale_record %}
+                <p class='no-results'>No Sale Transaction record found.</p>
+                {% endif %}
+
+                <table class="results-table">
+                    <tr>
+                        <th>Buyers's Customer Type</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Street Address</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Postal Code</th>
+                        <th>Business Name</th>
+                        <th>Business Contact Title</th>
+                        <th>Business Contact First Name</th>
+                        <th>Business Contact Last Name</th>
+                        <th>Person First Name</th>
+                        <th>Person Last Name</th>
+
+                        
+                        <th>Salesperson's First Name</th>
+                        <th>Salesperson's Last Name</th>
+                        <th>Sale date</th>
+                    
+                    </tr>
+                    <tbody>
+                        {% for row in sale_record %}
+                        <tr>
+
+                        <td>{{row.get('customer_type', 'N/A')}}</td>
+                        <td>{{row.get('email', 'N/A')}}</td>
+                        <td>{{row.get('phone', 'N/A')}}</td>
+                        <td>{{row.get('streetaddress', 'N/A')}}</td>
+                        <td>{{row.get('city', 'N/A')}}</td>
+                        <td>{{row.get('state', 'N/A')}}</td>
+                        <td>{{row.get('postalcode', 'N/A')}}</td>
+                        <td>{{row.get('biz_name', 'N/A')}}</td>
+                        <td>{{row.get('biz_contact_title', 'N/A')}}</td>
+                        <td>{{row.get('biz_contact_first', 'N/A')}}</td>
+                        <td>{{row.get('biz_contact_last', 'N/A')}}</td>
+                        <td>{{row.get('person_first', 'N/A')}}</td>
+                        <td>{{row.get('person_last', 'N/A')}}</td>
+
+                        <td>{{row.get('first_name', 'N/A')}}</td>
+                        <td>{{row.get('last_name', 'N/A')}}</td>
+                        <td>{{row.get('saledate', 'N/A')}}</td>
+                    
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+                <br><br><br>
+
+
+            {% endif %}
+
+            {% if user.is_salesperson or user.is_owner%}
+                <p><a href="{{ url_for('sale_transaction') }}">Sell the vehicle</a></p>
+            {% endif %}
+        </div>
+    </body>
+    </html>

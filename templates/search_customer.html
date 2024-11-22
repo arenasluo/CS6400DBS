@@ -1,0 +1,125 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Search Customer</title>
+        <style>
+            .center {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+                padding: 20px;
+            }
+            .results-table {
+                width: 80%;
+                margin-top: 20px;
+                border-collapse: collapse;
+            }
+            .results-table, .results-table th, .results-table td {
+                border: 1px solid #ccc;
+                padding: 10px;
+                text-align: left;
+            }
+            .results-table th {
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="center">
+            <h1>Search Customer Results</h1>
+
+            {% if customer.is_person %}
+            <h2>Customer type: person</h2>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>SSN</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Street Address</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Postal Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in search_results1 %}
+                    <tr>
+                    <td>{{row.get('ssn', 'N/A')}}</td>
+                    <td>{{row.get('firstname', 'N/A')}}</td>
+                    <td>{{row.get('lastname', 'N/A')}}</td>
+                    <td>{{row.get('email', 'N/A')}}</td>
+                    <td>{{row.get('phone', 'N/A')}}</td>
+                    <td>{{row.get('streetaddress', 'N/A')}}</td>
+                    <td>{{row.get('city', 'N/A')}}</td>
+                    <td>{{row.get('state', 'N/A')}}</td>
+                    <td>{{row.get('postalcode', 'N/A')}}</td>
+                    
+                    </tr>
+                    {% endfor %}
+                
+                </tbody>
+            </table>
+            {% endif %}
+            
+
+            {% if customer.is_business %}
+            <h2>Customer type: business</h2>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>TIN</th>
+                        <th>Business Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    
+                        <th>Title</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Street Address</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Postal Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in search_results1 %}
+                    <tr>
+                    <td>{{row.get('tin', 'N/A')}}</td>
+                    <td>{{row.get('businessname', 'N/A')}}</td>
+                    <td>{{row.get('firstname', 'N/A')}}</td>
+                    <td>{{row.get('lastname', 'N/A')}}</td>
+                    
+                    <td>{{row.get('title', 'N/A')}}</td>
+                    <td>{{row.get('email', 'N/A')}}</td>
+                    <td>{{row.get('phone', 'N/A')}}</td>
+                    <td>{{row.get('streetaddress', 'N/A')}}</td>
+                    <td>{{row.get('city', 'N/A')}}</td>
+
+                    <td>{{row.get('state', 'N/A')}}</td>
+                    <td>{{row.get('postalcode', 'N/A')}}</td>
+                    
+                    </tr>
+                    {% endfor %}
+                
+                </tbody>
+            </table>
+            {% endif %}
+
+
+        </div>
+        <p><a href="/add_vehicle">Back to Add Vehicle</a></p>
+
+        <p><a href="/sale_transaction">Back to Sell Vehicle</a></p>
+
+
+
+
+    </body>
+    </html>

@@ -1,0 +1,83 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <title>Vehicle Search Result</title>
+        <style>
+            .center {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+                padding: 20px;
+            }
+            .results-table {
+                width: 80%;
+                margin-top: 20px;
+                border-collapse: collapse;
+            }
+            .results-table, .results-table th, .results-table td {
+                border: 1px solid #ccc;
+                padding: 10px;
+                text-align: left;
+            }
+            .results-table th {
+                background-color: #f2f2f2;
+            }
+            .no-results {
+                margin-top: 20px;
+                font-size: 20px;
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <p><a href="{{ url_for('logout') }}">Logout</a></p>
+        <div class="center">
+            <h2>Vehicle Search Results</h2>
+            <a href="/"><button>Back to Main Menu</button></a>
+            {% if not search_results  %}
+                <p class='no-results'>No results found.</p>
+            {% endif %}
+
+            <table class="results-table">
+                <thead>
+                <tr>
+                    <th>VIN</th>
+                    <th>Vehicle Type</th>
+                    <th>Manufacturer</th>
+                    <th>Model Name</th>
+                    <th>Model Year</th>
+                    <th>Fuel Type</th>
+                    <th>Colors</th>
+                    <th>Horse Power</th>
+
+                    <th>Sale Price</th>
+                    <th>Vehicle details</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for row in search_results %}
+                <tr>
+            
+                    <td>{{row.get('vin', 'N/A')}}</td>
+                    <td>{{row.get('vehicle_type', 'N/A')}}</td>
+                    <td>{{row.get('manufacturer', 'N/A')}}</td>
+                    <td>{{row.get('modelname', 'N/A')}}</td>
+                    <td>{{row.get('modelyear', 'N/A')}}</td>
+                    <td>{{row.get('fueltype', 'N/A')}}</td>
+                    <td>{{row.get('colors', 'N/A')}}</td>
+                    <td>{{row.get('horsepower', 'N/A')}}</td>
+
+                    <td>{{row.get('saleprice', 'N/A')}}</td>
+                    <td><a href="{{ url_for('vehicle_detail', vin=row.vin) }}"><button>view details</button></a></td>
+
+                </tr>
+                {% endfor %}
+                </tbody>
+                    
+            </table>
+        </div>
+    </body>
+    </html>
